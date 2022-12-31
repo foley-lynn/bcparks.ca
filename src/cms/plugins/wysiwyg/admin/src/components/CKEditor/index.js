@@ -8,7 +8,7 @@ const Wrapper = styled.div`
 		width: 6em;
 	}
 	.ck-editor__main > div {
-		min-height: 200px
+		min-height: 200px;
 	}
 	.ck-content {
 		font-size: 16px;
@@ -128,7 +128,52 @@ const configuration = {
 		]
 	},
 	mediaEmbed: {
-		previewsInData: true
+		previewsInData: true,
+		providers: [
+			{
+				name: 'youtube',
+				url: [
+					/^(?:m\.)?youtube\.com\/watch\?v=([\w-]+)/,
+					/^(?:m\.)?youtube\.com\/v\/([\w-]+)/,
+					/^youtube\.com\/embed\/([\w-]+)/,
+					/^youtu\.be\/([\w-]+)/
+				],
+				html: match => {
+					const id = match[ 1 ];
+					return (
+						'<div style="position: relative; padding-bottom: 100%; height: 0; padding-bottom: 56.2493%;">' +
+							`<iframe id=”park-operator-video” src="https://www.youtube-nocookie.com/embed/${ id }" ` +
+								'style="position: absolute; width: 100%; height: 100%; top: 0; left: 0;; " ' +
+								'frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>' +
+							'</iframe>' +
+						'</div>'
+					);
+				}
+			},
+			{
+				name: 'vimeo',
+				url: [
+					/^vimeo\.com\/(\d+)/,
+					/^vimeo\.com\/[^/]+\/[^/]+\/video\/(\d+)/,
+					/^vimeo\.com\/album\/[^/]+\/video\/(\d+)/,
+					/^vimeo\.com\/channels\/[^/]+\/(\d+)/,
+					/^vimeo\.com\/groups\/[^/]+\/videos\/(\d+)/,
+					/^vimeo\.com\/ondemand\/[^/]+\/(\d+)/,
+					/^player\.vimeo\.com\/video\/(\d+)/
+				],
+				html: match => {
+					const id = match[ 1 ];
+					return (
+						'<div style="position: relative; padding-bottom: 100%; height: 0; padding-bottom: 56.2493%;">' +
+							`<iframe id=”park-operator-video” src="https://player.vimeo.com/video/${ id }" ` +
+								'style="position: absolute; width: 100%; height: 100%; top: 0; left: 0;" ' +
+								'frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen>' +
+							'</iframe>' +
+						'</div>'
+					);
+				}
+			},
+		]
 	},
 	htmlSupport: {
 		allow: [
