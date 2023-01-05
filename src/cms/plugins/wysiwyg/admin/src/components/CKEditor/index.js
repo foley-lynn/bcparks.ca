@@ -139,7 +139,11 @@ const configuration = {
 					/^youtu\.be\/([\w-]+)/
 				],
 				html: match => {
-					const id = match[ 1 ];
+					const id = match[1];
+					const vidurl = `https://www.youtube.com/watch?v=${ id }`;
+					fetch(`https://noembed.com/embed?dataType=json&url=${vidurl}`)
+					.then(res => res.json())
+					.then(data => console.log('fetch', data.title))
 					return (
 						'<div style="position: relative; padding-bottom: 100%; height: 0; padding-bottom: 56.2493%;">' +
 							`<iframe id=”park-operator-video” src="https://www.youtube-nocookie.com/embed/${ id }" ` +
