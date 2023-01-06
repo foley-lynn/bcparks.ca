@@ -140,18 +140,21 @@ const configuration = {
 				],
 				html: match => {
 					const id = match[1];
-					const vidurl = `https://www.youtube.com/watch?v=${ id }`;
+					const vidurl = `https://www.youtube.com/watch?v=${id}`;
+
 					fetch(`https://noembed.com/embed?dataType=json&url=${vidurl}`)
 					.then(res => res.json())
-					.then(data => console.log('fetch', data.title))
+					.then(data => console.log(data.title))
+					
 					return (
-						'<div style="position: relative; padding-bottom: 100%; height: 0; padding-bottom: 56.2493%;">' +
-							`<iframe id=”park-operator-video” src="https://www.youtube-nocookie.com/embed/${ id }" ` +
-								'style="position: absolute; width: 100%; height: 100%; top: 0; left: 0;; " ' +
-								'frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>' +
-							'</iframe>' +
-						'</div>'
+						`<div style="position: relative; padding-bottom: 100%; height: 0; padding-bottom: 56.2493%;">
+							<iframe id=”data_title_goes_here” src="https://www.youtube-nocookie.com/embed/${ id }"
+								style="position: absolute; width: 100%; height: 100%; top: 0; left: 0;"
+								frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>
+							</iframe>
+						</div>`
 					);
+
 				}
 			},
 			{
